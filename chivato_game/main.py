@@ -36,7 +36,7 @@ def decision(other_decision: bool) -> bool:
         my_score, other_score = 3, 3
     elif my_decision and not other_decision:
         my_score, other_score = 0, 7
-    # De la linea 34 a la 37 no haria falta ya que nuestra estrategia es no delatar 
+    # De la linea 35 a la 38 no haria falta ya que nuestra estrategia es no delatar 
     # nunca pero las ponemos para que se entiendan las posibles combinaciones.
     elif not my_decision and other_decision:
         my_score, other_score = 7, 0
