@@ -20,9 +20,7 @@ cur.execute("""CREATE TABLE game (
 """)
 
 
-def decision(other_decision: bool) -> bool:
-    if other_decision is None:
-        return None
+def decision(other_decision: bool | None) -> bool | None:
     my_decision = False
     # Condición de inicialización de los registros.
     if cur.lastrowid < 1:
@@ -32,7 +30,9 @@ def decision(other_decision: bool) -> bool:
     """
     )
     con.commit()
-    if my_decision and other_decision:
+    if other_decision is None:
+        return None
+    elif my_decision and other_decision:
         my_score, other_score = 3, 3
     elif my_decision and not other_decision:
         my_score, other_score = 0, 7
@@ -59,15 +59,18 @@ def decision(other_decision: bool) -> bool:
 
 # Caso de prueba 
 
-# rounds = [False, False, True, False, True]
+# rounds = [True, None, False, True, False, None, False, True]
 
 # for round in rounds:
 #     points = decision(round)
-#     print(f"""
-#     RONDA {cur.lastrowid}:
-#     Mis puntos: {points[0]}.
-#     Sus puntos: {points[1]}.
-#     """)
+#     if points is not None:
+#         print(f"""
+#         RONDA {cur.lastrowid}:
+#         Mis puntos: {points[0]}.
+#         Sus puntos: {points[1]}.
+#         """)
+#     else:
+#         print('ERROR:\nValor "None" insertado en esta ronda.\nSolo valores booleanos (True/False).\nSe ignorará tanto el conteo como el registro.')
 
 # print('\nHistorial de rondas:')
 # for row in cur.execute('SELECT * FROM game'):
